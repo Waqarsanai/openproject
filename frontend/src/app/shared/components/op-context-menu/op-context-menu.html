@@ -30,6 +30,7 @@
           (click)="handleClick(item, $event)"
         >
           <op-icon *ngIf="item.icon" icon-classes="icon-action-menu {{ item.icon }}"></op-icon>
+          <span *ngIf="item.octicon" [innerHTML]="item.octicon"></span>
           <span [textContent]="item.linkText"></span>
           <op-icon *ngIf="item.postIcon"
                    [icon-title]="item.postIconTitle || ''"
@@ -47,6 +48,7 @@
           (click)="handleClick(item, $event)"
         >
           <op-icon *ngIf="item.icon" icon-classes="icon-action-menu {{ item.icon }}"></op-icon>
+          <span *ngIf="item.octicon" [innerHTML]="item.octicon"></span>
           <span [textContent]="item.linkText"></span>
           <op-icon *ngIf="item.postIcon"
                    [icon-title]="item.postIconTitle || ''"

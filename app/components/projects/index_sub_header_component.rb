@@ -93,7 +93,7 @@ module Projects
       when Project.workspace_types[:portfolio]
         :briefcase
       when Project.workspace_types[:program]
-        :"project-roadmap"
+        :versions
       end
     end
 

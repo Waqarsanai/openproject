@@ -133,12 +133,25 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
       plural: this.I18n.t('js.label_project_plural'),
       list: this.I18n.t('js.label_project_list'),
       select: this.I18n.t('js.label_all_projects'),
+      search_placeholder: this.I18n.t('js.include_projects.search_placeholder'),
+      no_results: this.I18n.t('js.include_projects.no_results'),
+      no_favorite_results: this.I18n.t('js.include_projects.no_favorite_results'),
     },
-    search_placeholder: this.I18n.t('js.include_projects.search_placeholder'),
+    workspace: {
+      plural: this.I18n.t('js.label_workspace_plural'),
+      list: this.I18n.t('js.label_workspace_list'),
+      select: this.I18n.t('js.label_all_workspaces'),
+      search_placeholder: this.I18n.t('js.include_workspaces.search_placeholder'),
+      no_results: this.I18n.t('js.include_workspaces.no_results'),
+      no_favorite_results: this.I18n.t('js.include_workspaces.no_favorite_results'),
+    },
     search_favorites_placeholder: this.I18n.t('js.include_projects.search_placeholder_favorites'),
-    no_results: this.I18n.t('js.include_projects.no_results'),
-    no_favorite_results: this.I18n.t('js.include_projects.no_favorite_results'),
   };
+
+  // Computed text properties based on portfolio models feature flag
+  public get currentText() {
+    return this.portfolioModelsEnabled ? this.text.workspace : this.text.project;
+  }
 
   public displayMode:'all'|'favored';
 
@@ -198,7 +211,7 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
 
   ngOnInit():void {
     const stored = window.OpenProject.guardedLocalStorage(this.displayModeLocalStorageKey) as 'all'|'favored'|undefined;
-    this.displayMode = stored || 'all';
+    this.displayMode = stored ?? 'all';
   }
 
   toggleDropModal():void {
@@ -215,7 +228,7 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
     this.displayMode = mode;
     window.OpenProject.guardedLocalStorage(this.displayModeLocalStorageKey, mode);
 
-    if (this.currentProject?.id) {
+    if (this.currentProject.id) {
       this.searchableProjectListService.selectedItemID$.next(parseInt(this.currentProject.id, 10));
     }
   }
@@ -230,7 +243,7 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
       return this.currentProject.name;
     }
 
-    return this.text.project.select;
+    return this.currentText.select;
   }
 
   allProjectsPath():string {
@@ -248,5 +261,19 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
     }
 
     return projects.length > 0 && favorites.length > 0;
+  }
+
+  searchPlaceHolder():string {
+    if (this.displayMode === 'all') {
+      return this.currentText.search_placeholder;
+    }
+    return this.text.search_favorites_placeholder;
+  }
+
+  noSearchResultsText():string {
+    if (this.displayMode === 'all') {
+      return this.currentText.no_results;
+    }
+    return this.currentText.no_favorite_results;
   }
 }

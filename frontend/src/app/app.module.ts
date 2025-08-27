@@ -78,6 +78,12 @@ import {
 import {
   OpHeaderProjectSelectListComponent,
 } from 'core-app/shared/components/header-project-select/list/header-project-select-list.component';
+import {
+  WorkspaceCreateButtonComponent,
+} from 'core-app/shared/components/workspace-create-button/workspace-create-button.component';
+import {
+  OpWorkspaceCreateDropdownDirective,
+} from 'core-app/shared/components/workspace-create-button/workspace-create-dropdown.directive';
 
 import { PaginationService } from 'core-app/shared/components/table-pagination/pagination-service';
 import { MainMenuResizerComponent } from 'core-app/shared/components/resizer/resizer/main-menu-resizer.component';
@@ -263,6 +269,10 @@ export function runBootstrap(appRef:ApplicationRef) {
     // Project selector
     OpHeaderProjectSelectComponent,
     OpHeaderProjectSelectListComponent,
+
+    // Workspace create button
+    WorkspaceCreateButtonComponent,
+    OpWorkspaceCreateDropdownDirective,
 
     // Form configuration
     OpDragScrollDirective,

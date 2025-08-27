@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 
 export const OpContextMenuLocalsToken = new InjectionToken<any>('CONTEXT_MENU_LOCALS');
 
@@ -6,6 +7,7 @@ export interface OpContextMenuItem {
   disabled?:boolean;
   hidden?:boolean;
   icon?:string;
+  octicon?:SafeHtml; // Pre-rendered SVG HTML for octicons
   href?:string;
   class?:string;
   ariaLabel?:string;
