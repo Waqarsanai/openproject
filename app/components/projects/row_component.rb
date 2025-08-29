@@ -126,8 +126,19 @@ module Projects
       project.id.to_s
     end
 
+    def workspace_icon
+      content_tag(:span, title: helpers.workspace_title(project.workspace_type)) do
+        render(Primer::Beta::Octicon.new(icon: helpers.workspace_icon(project.workspace_type)))
+      end
+    end
+
     def name
       content = content_tag(:i, "", class: "projects-table--hierarchy-icon")
+
+      if OpenProject::FeatureDecisions.portfolio_models_active?
+        content << " "
+        content << workspace_icon
+      end
 
       if project.archived?
         content << " "

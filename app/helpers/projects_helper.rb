@@ -98,4 +98,26 @@ module ProjectsHelper
       I18n.t(:label_program_new)
     end
   end
+
+  def workspace_icon(type)
+    case type
+    when Project.workspace_types[:project]
+      :project
+    when Project.workspace_types[:portfolio]
+      :briefcase
+    when Project.workspace_types[:program]
+      :versions
+    end
+  end
+
+  def workspace_title(type)
+    case type
+    when Project.workspace_types[:project]
+      I18n.t("js.label_project")
+    when Project.workspace_types[:portfolio]
+      I18n.t("js.label_portfolio")
+    when Project.workspace_types[:program]
+      I18n.t("js.label_program")
+    end
+  end
 end
