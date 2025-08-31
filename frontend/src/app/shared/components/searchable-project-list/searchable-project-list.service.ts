@@ -52,7 +52,7 @@ export class SearchableProjectListService {
       },
     )
       .pipe(
-        finalize(() => this.fetchingProjects$.next(false)),
+        finalize(() => { return this.fetchingProjects$.next(false); }),
       )
       .subscribe((projects) => {
         this.allProjects$.next(projects);
@@ -73,6 +73,7 @@ export class SearchableProjectListService {
         'elements/identifier',
         'elements/self',
         'elements/ancestors',
+        'elements/workspaceType',
         'total',
         'count',
         'pageSize',
@@ -106,19 +107,19 @@ export class SearchableProjectListService {
 
   public resetActiveResult(projects:IProjectData[]):void {
     const findFirstNonDisabledID = (projects:IProjectData[]):ID|null => {
-      for (let i = 0; i < projects.length; i++) {
-        if (!projects[i].disabled) {
-          return projects[i].id;
+      for (const project of projects) {
+        if (!project.disabled) {
+          return project.id;
         }
 
-        const childFound = findFirstNonDisabledID(projects[i].children);
+        const childFound = findFirstNonDisabledID(project.children);
         if (childFound !== null) {
           return childFound;
         }
       }
 
       return null;
-    }
+    };
 
     this.selectedItemID$.next(findFirstNonDisabledID(projects));
   }
@@ -129,7 +130,7 @@ export class SearchableProjectListService {
     }
 
     const findLastChild = (project:IProjectData):IProjectData => {
-      if (project?.children?.length) {
+      if (project.children.length) {
         return findLastChild(project.children[project.children.length - 1]);
       }
 

@@ -66,6 +66,7 @@ RSpec.describe API::V3::Projects::ProjectSqlRepresenter, "rendering" do
             _type: "Project",
             name: project.name,
             identifier: project.identifier,
+            workspaceType: project.workspace_type,
             active: true,
             public: false,
             _links: {

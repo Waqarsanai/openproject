@@ -21,6 +21,7 @@
       class="spot-list--item-title spot-list--item-title_ellipse-text"
       data-test-selector="op-header-project-select--item-title"
     >
+      <span *ngIf="portfolioModelsEnabled" [innerHTML]="workspaceTypeIcon(project)"></span>
       <span
         [opSearchHighlight]="searchText"
         [textContent]="project.name"></span>
@@ -50,6 +51,7 @@
       'spot-list--item-action_active': (searchableProjectListService.selectedItemID$ | async) === project.id
     }"
   >
+    <span *ngIf="portfolioModelsEnabled" [innerHTML]="workspaceTypeIcon(project)"></span>
     <span
       class="spot-list--item-title spot-list--item-title_ellipse-text"
       data-test-selector="op-header-project-select--item-disabled-title"
