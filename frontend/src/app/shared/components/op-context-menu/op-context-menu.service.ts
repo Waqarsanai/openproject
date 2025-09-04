@@ -45,7 +45,7 @@ export class OPContextMenuService {
     );
 
     // Close context menus on state change
-    this.$transitions.onStart({}, () => { this.close(); });
+    this.$transitions.onStart({}, () => { return this.close() });
 
     // Listen to keyups on window to close context menus
     jQuery(window).on('keydown', (evt:JQuery.TriggeredEvent) => {
@@ -72,20 +72,6 @@ export class OPContextMenuService {
         }
       }, true);
     }
-
-    // Listen for clicks on project selector modal separately. It is required, because
-    // clicks inside the modal are not propagated, in order to not erroneously close the modal.
-    document.body.addEventListener('click', (evt:Event) => {
-      if (!that.active) return;
-
-      const target = evt.target as Element;
-      const isInsideProjectModal = target.closest('.spot-drop-modal--body');
-      const isInsideContextMenu = that.portalHostElement.contains(target);
-
-      if (isInsideProjectModal && !isInsideContextMenu) {
-        that.close();
-      }
-    }, true);
   }
 
   /**

@@ -133,19 +133,15 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
       plural: this.I18n.t('js.label_project_plural'),
       list: this.I18n.t('js.label_project_list'),
       select: this.I18n.t('js.label_all_projects'),
-      search_placeholder: this.I18n.t('js.include_projects.search_placeholder'),
-      no_results: this.I18n.t('js.include_projects.no_results'),
-      no_favorite_results: this.I18n.t('js.include_projects.no_favorite_results'),
+      search_placeholder: this.I18n.t('js.include_projects.search_placeholder')
     },
     workspace: {
-      plural: this.I18n.t('js.label_workspace_plural'),
       list: this.I18n.t('js.label_workspace_list'),
-      select: this.I18n.t('js.label_all_workspaces'),
-      search_placeholder: this.I18n.t('js.include_workspaces.search_placeholder'),
-      no_results: this.I18n.t('js.include_workspaces.no_results'),
-      no_favorite_results: this.I18n.t('js.include_workspaces.no_favorite_results'),
+      search_placeholder: this.I18n.t('js.include_workspaces.search_placeholder')
     },
     search_favorites_placeholder: this.I18n.t('js.include_projects.search_placeholder_favorites'),
+    no_results: this.I18n.t('js.include_projects.no_results'),
+    no_favorite_results: this.I18n.t('js.include_projects.no_favorite_results')
   };
 
   // Computed text properties based on portfolio models feature flag
@@ -243,7 +239,7 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
       return this.currentProject.name;
     }
 
-    return this.currentText.select;
+    return this.text.project.select;
   }
 
   allProjectsPath():string {
@@ -272,8 +268,8 @@ export class OpHeaderProjectSelectComponent extends UntilDestroyedMixin implemen
 
   noSearchResultsText():string {
     if (this.displayMode === 'all') {
-      return this.currentText.no_results;
+      return this.text.no_results;
     }
-    return this.currentText.no_favorite_results;
+    return this.text.no_favorite_results;
   }
 }
