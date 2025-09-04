@@ -127,29 +127,25 @@ export class OpHeaderProjectSelectListComponent implements OnInit, OnChanges {
     return `${url}?jump=${encodeURIComponent(currentMenuItem.content)}`;
   }
 
-  workspaceTypeIcon(project:IProjectData):SafeHtml {
+  workspaceTypeIconWithLabel(project:IProjectData):SafeHtml {
     const iconData = this.workspaceTypeSVGData(project.workspaceType);
     if (!iconData) {
       return '';
     }
 
     const htmlString = toDOMString(iconData, 'small', { 'aria-hidden': 'true', class: 'octicon' });
-    return this.sanitizer.bypassSecurityTrustHtml(htmlString);
+    const translatedTypeName = this.I18n.t(`js.include_workspaces.types.${project.workspaceType}`);
+    const iconWithText = htmlString + ' ' + translatedTypeName;
+    return this.sanitizer.bypassSecurityTrustHtml(iconWithText);
   }
 
   private workspaceTypeSVGData(workspaceType:string):SVGData|undefined{
     switch (workspaceType) {
-      case 'project': {
-        return projectIconData;
-        break;
-      }
       case 'program': {
         return versionsIconData;
-        break;
       }
       case 'portfolio': {
         return briefcaseIconData;
-        break;
       }
       default: {
         return undefined; // Case fallthrough for eslint
