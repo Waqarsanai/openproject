@@ -45,7 +45,7 @@ export class OPContextMenuService {
     );
 
     // Close context menus on state change
-    this.$transitions.onStart({}, () => { return this.close() });
+    this.$transitions.onStart({}, () => { this.close(); });
 
     // Listen to keyups on window to close context menus
     jQuery(window).on('keydown', (evt:JQuery.TriggeredEvent) => {

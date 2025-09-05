@@ -52,7 +52,7 @@ export class SearchableProjectListService {
       },
     )
       .pipe(
-        finalize(() => { return this.fetchingProjects$.next(false); }),
+        finalize(() => { this.fetchingProjects$.next(false); }),
       )
       .subscribe((projects) => {
         this.allProjects$.next(projects);
