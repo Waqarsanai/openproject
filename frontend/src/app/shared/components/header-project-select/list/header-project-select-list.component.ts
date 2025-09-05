@@ -21,7 +21,6 @@ import { ConfigurationService } from 'core-app/core/config/configuration.service
 import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
 import {
   toDOMString,
-  projectIconData,
   versionsIconData,
   briefcaseIconData,
   SVGData,
