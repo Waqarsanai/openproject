@@ -410,16 +410,16 @@ module Projects
       # Only show icon and type for non-project workspaces
       workspace_type_title = case project.workspace_type
                              when Project.workspace_types[:portfolio]
-                               I18n.t("js.include_workspaces.types.portfolio")
+                               I18n.t(:label_portfolio)
                              when Project.workspace_types[:program]
-                               I18n.t("js.include_workspaces.types.program")
+                               I18n.t(:label_program)
                              end
 
       return unless workspace_type_title
 
       render(Primer::Beta::Text.new(color: :muted)) do
         icon = render(Primer::Beta::Octicon.new(icon: helpers.workspace_icon(project.workspace_type)))
-        "#{icon} #{workspace_type_title}"
+        safe_join([icon, " ", workspace_type_title])
       end
     end
   end

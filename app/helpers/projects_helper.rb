@@ -109,5 +109,4 @@ module ProjectsHelper
       :versions
     end
   end
-
 end
