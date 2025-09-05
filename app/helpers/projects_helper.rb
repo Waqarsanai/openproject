@@ -110,14 +110,4 @@ module ProjectsHelper
     end
   end
 
-  def workspace_title(type)
-    case type
-    when Project.workspace_types[:project]
-      I18n.t("js.label_project")
-    when Project.workspace_types[:portfolio]
-      I18n.t("js.label_portfolio")
-    when Project.workspace_types[:program]
-      I18n.t("js.label_program")
-    end
-  end
 end

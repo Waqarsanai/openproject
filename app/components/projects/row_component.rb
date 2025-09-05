@@ -126,19 +126,8 @@ module Projects
       project.id.to_s
     end
 
-    def workspace_icon
-      content_tag(:span, title: helpers.workspace_title(project.workspace_type)) do
-        render(Primer::Beta::Octicon.new(icon: helpers.workspace_icon(project.workspace_type)))
-      end
-    end
-
     def name
       content = content_tag(:i, "", class: "projects-table--hierarchy-icon")
-
-      if OpenProject::FeatureDecisions.portfolio_models_active?
-        content << " "
-        content << workspace_icon
-      end
 
       if project.archived?
         content << " "
@@ -147,6 +136,12 @@ module Projects
 
       content << " "
       content << helpers.link_to_project(project, {}, { data: { turbo: false } }, false)
+
+      if workspace_type_badge && OpenProject::FeatureDecisions.portfolio_models_active?
+        content << " "
+        content << workspace_type_badge
+      end
+
       content
     end
 
@@ -409,6 +404,23 @@ module Projects
 
     def current_page
       table.model.current_page.to_s
+    end
+
+    def workspace_type_badge
+      # Only show icon and type for non-project workspaces
+      workspace_type_title = case project.workspace_type
+                             when Project.workspace_types[:portfolio]
+                               I18n.t("js.include_workspaces.types.portfolio")
+                             when Project.workspace_types[:program]
+                               I18n.t("js.include_workspaces.types.program")
+                             end
+
+      return unless workspace_type_title
+
+      render(Primer::Beta::Text.new(color: :muted)) do
+        icon = render(Primer::Beta::Octicon.new(icon: helpers.workspace_icon(project.workspace_type)))
+        "#{icon} #{workspace_type_title}"
+      end
     end
   end
 end
