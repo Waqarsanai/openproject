@@ -1,0 +1,3 @@
+class JiraUser < ApplicationRecord
+
+end

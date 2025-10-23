@@ -1,0 +1,3 @@
+class JiraSyncLog < ApplicationRecord
+
+end
