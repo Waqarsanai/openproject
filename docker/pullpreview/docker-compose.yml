@@ -38,9 +38,11 @@ services:
       - backend
     depends_on:
       - web
+      - hocuspocus
     ports:
       - "80:80"
       - "443:443"
+      - "1234:1234"
     volumes:
       - "caddy_data:/data"
 
@@ -65,9 +67,23 @@ services:
     depends_on:
       - db
       - worker
+    environment:
+      - OPENPROJECT_COLLABORATIVE_EDITING_HOCUSPOCUS_URL=wss://${PULLPREVIEW_PUBLIC_DNS}:1234
 
   worker:
     <<: *defaults
     command: "./docker/prod/worker --seed --set attachment_max_size=262144,host_name=${PULLPREVIEW_PUBLIC_DNS}"
     depends_on:
       - db
+
+  hocuspocus:
+    image: openproject/hocuspocus:main-defdb238
+
+    networks:
+      - frontend
+      - backend
+    environment:
+      - ALLOWED_DOMAINS=${PULLPREVIEW_PUBLIC_DNS}
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+    expose:
+      - "1234"
