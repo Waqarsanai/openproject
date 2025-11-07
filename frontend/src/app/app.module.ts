@@ -209,6 +209,7 @@ import { WorkPackageFullCreateEntryComponent } from 'core-app/features/work-pack
 import { WorkPackageFullViewEntryComponent } from 'core-app/features/work-packages/routing/wp-full-view/wp-full-view-entry.component';
 import { MyPageComponent } from './features/my-page/my-page.component';
 import { DashboardComponent } from './features/overview/dashboard.component';
+import { BudgetOverviewGraphComponent } from './shared/components/budget-graphs/overview/budget-overview-graph.component';
 
 export function initializeServices(injector:Injector) {
   return () => {
@@ -423,5 +424,7 @@ export class OpenProjectModule implements DoBootstrap {
 
     registerCustomElement('opce-my-page', MyPageComponent, { injector });
     registerCustomElement('opce-dashboard', DashboardComponent, { injector });
+
+    registerCustomElement('opce-budget-overview-graph', BudgetOverviewGraphComponent, { injector });
   }
 }

@@ -29,12 +29,14 @@ See COPYRIGHT and LICENSE files for more details.
 
 <%=
   widget_wrapper do |_container|
-    flex_layout(align_items: :center, justify_content: :space_between, style: "gap:1.2rem") do |flex|
+    flex_layout(align_items: :flex_start, justify_content: :space_between, style: "gap:1.2rem") do |flex|
       flex.with_column(flex: 1) do
         render(border_box_container) do |border_box|
           border_box.with_header_content(t(".total_actual_costs"))
           border_box.with_body do
-            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) { "€2000" }
+            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) do
+              helpers.number_to_currency(spent_total)
+            end
           end
         end
       end
@@ -43,7 +45,9 @@ See COPYRIGHT and LICENSE files for more details.
         render(border_box_container) do |border_box|
           border_box.with_header_content(t(".total_planned_budget"))
           border_box.with_body do
-            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) { "€2000" }
+            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) do
+              helpers.number_to_currency(budget_total)
+            end
           end
         end
       end
@@ -52,7 +56,9 @@ See COPYRIGHT and LICENSE files for more details.
         render(border_box_container) do |border_box|
           border_box.with_header_content(t(".spent_budget"))
           border_box.with_body do
-            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) { "62.5%" }
+            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) do
+              spent_ratio.to_s
+            end
           end
         end
       end
@@ -61,7 +67,9 @@ See COPYRIGHT and LICENSE files for more details.
         render(border_box_container) do |border_box|
           border_box.with_header_content(t(".remaining_budget"))
           border_box.with_body do
-            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) { "€2000" }
+            render(Primer::Beta::Text.new(font_weight: :bold, font_size: 1)) do
+              helpers.number_to_currency(remaining)
+            end
           end
         end
       end

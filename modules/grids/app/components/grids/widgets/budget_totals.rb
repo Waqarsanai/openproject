@@ -37,8 +37,66 @@ module Grids
         nil
       end
 
+      def budget_total
+        base_amounts + material_budget_amounts + labor_budget_amounts
+      end
+
+      def spent_ratio
+        spent_total / budget_total
+      end
+
+      def spent_total
+        spent_material + spent_labor
+      end
+
+      # budget - spent
+      def remaining
+        budget_total - spent_total
+      end
+
       def wrapper_arguments
         { content_padding: :none, full_width: true }
+      end
+
+      private
+
+      def spent_material
+        CostEntry
+          .joins("INNER JOIN work_packages ON work_packages.id = cost_entries.entity_id AND cost_entries.entity_type = 'WorkPackage'")
+          .where(work_packages: { project_id: self_and_descendant_projects.select(:id) })
+          .sum(:costs) # TODO support overridden costs
+      end
+
+      def spent_labor
+        TimeEntry
+          .joins("INNER JOIN work_packages ON work_packages.id = time_entries.entity_id AND time_entries.entity_type = 'WorkPackage'")
+          .where(work_packages: { project_id: self_and_descendant_projects.select(:id) })
+          .sum(:costs) # TODO support overridden costs
+      end
+
+      def base_amounts
+        Budget
+          .joins(:project)
+          .merge(self_and_descendant_projects)
+          .sum(:base_amount)
+      end
+
+      def material_budget_amounts
+        MaterialBudgetItem
+          .joins(budget: :project)
+          .merge(self_and_descendant_projects)
+          .sum(:amount)
+      end
+
+      def labor_budget_amounts
+        LaborBudgetItem
+          .joins(budget: :project)
+          .merge(self_and_descendant_projects)
+          .sum(:amount)
+      end
+
+      def self_and_descendant_projects
+        project.self_and_descendants.reorder(nil)
       end
     end
   end

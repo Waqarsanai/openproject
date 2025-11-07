@@ -30,11 +30,8 @@ See COPYRIGHT and LICENSE files for more details.
 <%=
   widget_wrapper do |_container|
     helpers.angular_component_tag(
-      "opce-wp-overview-graph",
-      inputs: {
-        "global-scope": true,
-        "initial-filters": helpers.version_wp_overview_graph_initial_filters(Version.last)
-      }
+      "opce-budget-overview-graph",
+      inputs: {}
     )
   end
 %>

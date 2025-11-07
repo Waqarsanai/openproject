@@ -1,0 +1,12 @@
+@if (error) {
+  <div class="op-toast -error">
+    <div class="op-toast--content" [textContent]="error">
+    </div>
+  </div>
+}
+
+<op-budget-embedded-graph
+  #budgetEmbeddedGraph
+  [datasets]="datasets"
+  [chartOptions]="chartOptions"
+  />

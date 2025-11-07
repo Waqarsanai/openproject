@@ -13,10 +13,26 @@ en:
         total_planned_budget: "Total planned budget"
       budget_by_cost_type:
         title: "Budget by cost type"
-      subitems:
-        title: "Subitems"
-        no_results: "There are no visible children."
-        view_all_subitems: "View all subitems"
+        caption:
+          zero: "No budget data."
+          one: "Data aggregated from one budget included in the %{portfolios}, %{subprograms} and %{subprojects}."
+          other: "Data aggregated from %{count} budgets included in the %{portfolios}, %{subprograms} and %{subprojects}."
+        portfolio:
+          zero: "no Portfolios"
+          one: "1 Portfolio"
+          other: "%{count} Portfolios"
+        subprogram:
+          zero: "no Subprograms"
+          one: "1 Subprogram"
+          other: "%{count} Subprograms"
+        subproject:
+          zero: "no Subprojects"
+          one: "1 Subproject"
+          other: "%{count} Subprojects"
+        subitems:
+          title: "Subitems"
+          no_results: "There are no visible children."
+          view_all_subitems: "View all subitems"
       members:
         title: "Members"
         no_results: "No visible members."
