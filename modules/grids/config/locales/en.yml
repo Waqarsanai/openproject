@@ -3,6 +3,16 @@ en:
     label_widget_in_grid: "Widget contained in Grid %{grid_name}"
 
     widgets:
+      actual_costs:
+        title: "Actual costs"
+      budget_totals:
+        title: "Budget totals"
+        remaining_budget: "Remaining budget"
+        spent_budget: "Spent budget"
+        total_actual_costs: "Total actual costs"
+        total_planned_budget: "Total planned budget"
+      budget_by_cost_type:
+        title: "Budget by cost type"
       subitems:
         title: "Subitems"
         no_results: "There are no visible children."
