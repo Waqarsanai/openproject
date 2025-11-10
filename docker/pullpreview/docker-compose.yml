@@ -40,6 +40,8 @@ services:
     depends_on:
       - web
       - hocuspocus
+    environment:
+      - "PULLPREVIEW_PUBLIC_DNS=${PULLPREVIEW_PUBLIC_DNS}"
     ports:
       - "80:80"
       - "443:443"
