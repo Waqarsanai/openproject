@@ -32,7 +32,7 @@ services:
   proxy:
     image: caddy:2
     restart: unless-stopped
-    command: "caddy reverse-proxy --from '${PULLPREVIEW_URL}' --to web:8080"
+    command: "caddy run --config /etc/caddy/Caddyfile"
     networks:
       - frontend
       - backend
@@ -42,9 +42,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "1234:1234"
     volumes:
       - "caddy_data:/data"
+      - "./Caddyfile:/etc/caddy/Caddyfile:ro"
 
   db:
     image: postgres:17
@@ -68,7 +68,7 @@ services:
       - db
       - worker
     environment:
-      - OPENPROJECT_COLLABORATIVE_EDITING_HOCUSPOCUS_URL=wss://${PULLPREVIEW_PUBLIC_DNS}:1234
+      - OPENPROJECT_COLLABORATIVE__EDITING__HOCUSPOCUS__URL=wss://${PULLPREVIEW_PUBLIC_DNS}
 
   worker:
     <<: *defaults

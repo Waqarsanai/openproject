@@ -45,6 +45,7 @@ jobs:
     - name: Prepare docker-compose files
       run: |
         cp ./docker/pullpreview/docker-compose.yml ./docker-compose.pullpreview.yml
+        cp ./docker/pullpreview/Caddyfile ./Caddyfile
         cp ./docker/prod/Dockerfile ./Dockerfile
     - uses: pullpreview/action@v5
       with:
