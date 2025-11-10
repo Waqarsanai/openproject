@@ -1,15 +1,19 @@
 {$PULLPREVIEW_URL} {
-	# Reverse proxy for web app
-	reverse_proxy / web:8080 {
-		header_up X-Forwarded-Proto {scheme}
-		header_up X-Forwarded-Host {host}
-		header_up X-Real-IP {remote_host}
+	# Websocket proxy for hocuspocus
+	handle /hocuspocus {
+		reverse_proxy hocuspocus:1234 {
+			transport http {
+				versions h2c 1.1
+			}
+		}
 	}
 
-	# Websocket proxy for hocuspocus
-	reverse_proxy /hocuspocus hocuspocus:1234 {
-		transport http {
-			versions h2c 1.1
+	# Reverse proxy for web app
+	handle {
+		reverse_proxy web:8080 {
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Forwarded-Host {host}
+			header_up X-Real-IP {remote_host}
 		}
 	}
 }
