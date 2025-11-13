@@ -196,13 +196,12 @@ export class IFCViewerPageComponent
 
   breadcrumbItems() {
     return [
-      { href: this.pathHelperService.homePath(), text: this.titleService.appTitle },
       {
-        href: this.pathHelperService.projectPath(this.currentProject.identifier as string),
+        href: this.pathHelperService.projectPath(this.currentProject.identifier!),
         text: (this.currentProject.name),
       },
       {
-        href: this.pathHelperService.projectBCFPath(this.currentProject.identifier as string),
+        href: this.pathHelperService.projectBCFPath(this.currentProject.identifier!),
         text: this.I18n.t('js.bcf.label_bcf'),
       },
       this.selectedTitle ?? '',
