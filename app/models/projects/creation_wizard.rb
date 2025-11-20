@@ -29,12 +29,13 @@
 #++
 
 module Projects::CreationWizard
+  ARTIFACT_NAME_OPTIONS = %w[project_creation_wizard project_initiation_request project_mandate].freeze
+
   extend ActiveSupport::Concern
 
   included do
     store_attribute :settings, :project_creation_wizard_enabled, :boolean
-
-    store_attribute :settings, :name_artefact_name, :string
+    store_attribute :settings, :project_creation_wizard_artifact_name, :string
 
     store_attribute :settings, :submission_work_package_type_id, :integer
     store_attribute :settings, :submission_status_when_submitted_id, :integer
@@ -44,5 +45,10 @@ module Projects::CreationWizard
     store_attribute :settings, :submission_work_package_comment, :string
     store_attribute :settings, :project_creation_wizard_pdf_export_type, :string, default: "attachment"
     store_attribute :settings, :project_creation_wizard_pdf_export_storage, :string
+  end
+
+  def project_creation_wizard_name
+    name = project_creation_wizard_artifact_name || "project_creation_wizard"
+    I18n.t("settings.project_initiation_request.name.options.#{name}")
   end
 end
