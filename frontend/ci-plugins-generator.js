@@ -43,21 +43,33 @@ const plugins = new Map([
   ['openproject-meeting', path.join(pluginDir, 'meeting')]
 ]);
 
+// determine which configured plugins actually have a frontend entry
+const allFrontendPlugins = Array.from(plugins).filter(([name, pluginPath]) => {
+  const frontendEntry = path.join(pluginPath, 'frontend', 'module', 'main.ts');
+  return fs.existsSync(frontendEntry);
+});
+
 console.log(`Cleaning linked target directory ${targetDir}`);
 fs.rmSync(targetDir, { recursive: true, force: true });
-fs.mkdirSync(targetDir);
+fs.mkdirSync(targetDir, { recursive: true });
 
-plugins.forEach((pluginPath, name) => {
+const symlinkType = process.platform === 'win32' ? 'junction' : 'dir';
+
+allFrontendPlugins.forEach(([name, pluginPath]) => {
   const linkTarget = path.join(pluginPath, 'frontend', 'module');
   const linkPath = path.join(targetDir, name);
 
   console.log(`Linking frontend of OpenProject plugin ${name} (${linkPath} -> ${linkTarget}).`);
-  fs.symlinkSync(linkTarget, linkPath);
-});
+  if (!fs.existsSync(linkTarget)) {
+    console.warn(`Skipping ${name}: link target does not exist: ${linkTarget}`);
+    return;
+  }
 
-const allFrontendPlugins = Array.from(plugins).filter(([, pluginPath]) => {
-  const frontendEntry = path.join(pluginPath, 'frontend', 'module', 'main.ts');
-  return fs.existsSync(frontendEntry);
+  try {
+    fs.symlinkSync(linkTarget, linkPath, symlinkType);
+  } catch (err) {
+    console.error(`Failed to create symlink for ${name}: ${err && err.message ? err.message : err}`);
+  }
 });
 
 function generatePluginModule(plugins) {
@@ -66,6 +78,6 @@ function generatePluginModule(plugins) {
 
   const result = LINKED_PLUGINS_MODULE_TEMPLATE(plugins);
   fs.writeFileSync(fileRegister, result);
-};
+}
 
 generatePluginModule(allFrontendPlugins);
