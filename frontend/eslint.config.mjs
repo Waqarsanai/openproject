@@ -1,6 +1,8 @@
 import eslint from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 import jasmine from 'eslint-plugin-jasmine';
 import angular from 'angular-eslint';
 import stylistic from '@stylistic/eslint-plugin';
@@ -29,12 +31,14 @@ export default defineConfig([
     ],
     processor: angular.processInlineTemplates,
     languageOptions: {
+      parser: tsParser,
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
       globals: { ...globals.browser, ...globals.node },
     },
+    plugins: { '@typescript-eslint': tsPlugin },
     rules: {
       /**
        * Any TypeScript source code (NOT TEMPLATE) related rules you wish to use/reconfigure over and above the
